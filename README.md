@@ -1,7 +1,8 @@
 # Latex2ipynb
 Script to translate LaTeX to notebook form
 
-**Preamble
+## Preamble 
+
 I had a set of LaTeX documents for a set of lab sessions that teach Linear Algebra to Computer Science students that
 use Python and NumPy.
 
@@ -16,7 +17,7 @@ This isn't perfect! For example character like [ and * get a \ before them in th
 of Python code. That said, it does create all the relevant cells which makes life a lot easier.
 
 Runing the script is simply 
-./Latex2ipynb.sh <LaTeX file> <ipynb file>
+./Latex2ipynb.sh \<LaTeX file> \<ipynb file>
 
 Don't put spaces in the file names. 
 
