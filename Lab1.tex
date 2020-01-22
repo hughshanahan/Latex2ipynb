@@ -1,0 +1,355 @@
+%\documentclass[hyperref={colorlinks=true},xcolor=svgnames]{amsart}
+
+\documentclass[11pt]{amsart}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{hyperref}
+\usepackage{listings}
+
+\newcommand{\catop}{\mbox{}^\frown}
+\renewcommand{\v}[1]{\underline{#1}}
+\newcommand{\vt}[1]{\underline{#1}^\intercal}
+\newcommand{\uv}[1]{\underline{\hat{#1}}}
+\newcommand{\vd}[2]{\begin{pmatrix}#1 \\ #2 \end{pmatrix}}
+\newcommand{\vdt}[2]{\begin{pmatrix}#1 & #2 \end{pmatrix}}
+\newcommand{\vdthree}[3]{\begin{pmatrix}#1 \\ #2 \\ #3 \end{pmatrix}}
+\newcommand{\length}[1]{|\v{#1}|}
+\renewcommand{\dot}[2]{{\v{#1}^\intercal} \cdot {\v{#2}}}
+\newcommand{\matr}[1]{\mathbf{#1}}  
+\newcommand{\invmatr}[1]{\matr{#1}^{-1}}
+\newcommand{\Identity}{\matr{I}}
+
+
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\title{CS2900 :- Topic 1 Lab}
+\author{Hugh Shanahan}
+%\date{}                                           % Activate to display a given date or no date
+
+%\newcommand{\cli}[1]{\lstinline{#1}}
+\newcommand{\cli}[1]{`{}`{}`{}code
+#1 
+`{}`{}`{}}
+\newcommand{\checkpoint}[1]{{\bf CHECKPOINT \newline #1 \newline} 
+
+`{}`{}`{}code
+ 
+`{}`{}`{}
+} 
+
+\begin{document}
+\lstset{basicstyle=\ttfamily}
+\lstset{showstringspaces=true}
+\lstset{language=Python}
+
+
+The learning outcomes of this session are
+
+\begin{itemize}
+\item to have an introductory understanding of Jupyter notebooks.
+\item To have an introductory understanding of the library NumPy, particularly with respect to vectors.
+\item To examine a case where vectors can be analysed that have a much larger dimension than 3. 
+\end{itemize}
+
+
+\section{Notebooks}
+
+ If you haven't encountered this before this is an example of a notebook (specifically a Jupyter notebook). This brings together text and code into one place.
+
+The parts of this screen which have "In [ ]:" to the left are referred to as cells. Cells are pieces of code that can be run. You can run the cells by clicking on the cell and pressing Control + Enter.
+
+If the cell generates output it will appear immediately after the cell in question when you do this.
+
+Do not just click through all the cells without thinking about what each cell is going to do. 
+
+{\bf There will be cells that are empty - you will need to fill them!}
+
+It's important to note that the cells are in order and you should enter them in that order.
+
+For this section, you will be largely running things interactively but it’s best to set up an editor window, type in there and then run the script (The F5 key will very much be your friend here). 
+
+If you click on Help  and Keyboard Shortcuts you will get a list of shortcuts for doing particular operations (I find the one for creating a cell below the one you are using is very useful). 
+
+If you want to save your notebook you can click on the diskette icon but remember that if you restart your binder session the information 
+will be lost. To keep a permanent version on your machine, click on File and then Download as and then Notebook. When you restart your 
+binder session on the directory page select Upload and then upload your file. You can then run it from there. 
+
+You may also wish to run Jupyter from your own computer. Instructions on this can be found at 
+\url{https://jupyter.org/install}.
+ 
+%Be sure to import NumPy as before with the first cell below.
+
+\section{NumPy Introduction}
+
+ We will make use of NumPy for this course to work with vectors and matrices. It's worth keeping an eye on the QuickStart tutorial to NumPy (which we copy from a great deal here) 
+ 
+ \url{https://docs.scipy.org/doc/numpy/user/}
+
+ and the NumPy manual at 
+
+ \url{https://docs.scipy.org/doc/numpy/index.html} .
+
+The following will import this library into your session 
+ 
+ \cli{import numpy as np} 
+ 
+ 
+You can define a vector as follows 
+
+\cli{a = np.array([1,2,3])} 
+
+(Note the ordering of round and square brackets).
+
+
+Inspect the contents of {\tt a} by executing
+
+\cli{a} 
+
+ You can access individual components directly as you would like any other array
+
+\cli{a[0]}
+
+
+\checkpoint{Enter in what you would need to inspect the second entry in {\tt a}.}
+
+%\cli{a[1]} 
+
+The vector {\tt a} has an associated set of methods including a nicer print statement. 
+
+\cli{print(a)}
+
+The entries in {\tt a} can be integers, floats and so on.
+  Since Python is a dynamically typed language, it tries to figure that out on the fly. One can check the type as follows 
+  
+  \cli{a.dtype.name}
+  
+{\it Question} - what type did you get? 
+  
+\checkpoint{Create another vector {\tt b} with same dimensions and size of entries as {\tt a}, 
+but where the entries are of type float.}
+
+ 
+There is a transpose operation, but for vectors defined this way it doesn't really do anything.  We'll get back to this in the second lab.  
+
+\cli{a.T} 
+  
+    
+
+
+
+\newpage
+
+\section{NumPy - Operations}
+
+We define the following set of new vectors.
+
+\cli{c = np.array([1.,2.])} 
+
+\cli{d = np.array([2.,1.])}
+
+We can do many of the simple operations such as multiplication by a scalar, adding and subtracting vectors.  
+{\bf Ask yourself what the output should be
+before pressing enter.}
+
+Type 
+
+\cli{2. * c}
+
+\cli{-.123 * d}
+
+\cli{c + d}
+
+\cli{c - d}
+
+
+As these vectors are objects, one needs to be careful when copying them as using $=$  only passes the reference.
+
+Type 
+
+\cli{u = c}
+
+\cli{print u} 
+
+\cli{c *= 3}
+
+\cli{print u}
+
+If you use the {\tt copy} method then the values of the vector are copied across. 
+
+Type 
+
+\cli{u = c.copy()}
+
+\cli{print u} 
+
+\cli{c *= 3}
+
+{\bf What will {\tt u} look like now?}
+
+\cli{print u}
+
+One can compute the dot product between any two vectors. 
+Type 
+
+\cli{c = np.array([1.,2.])} 
+
+\cli{c.dot(d)}
+
+\checkpoint{Create a new vector that is orthogonal to {\tt c}. Demonstrate numerically that it is orthogonal. }
+
+There isn't a length function in NumPy but you can easily construct one.
+
+Type 
+
+\cli{import math}
+
+\cli{math.sqrt(d.dot(d))}
+
+
+\checkpoint{Write a short function to compute the length of a vector.}
+
+One can determine a unit vector {\tt du} for a vector {\tt d}.
+
+Type 
+
+\cli{du=d/math.sqrt(d.dot(d))}
+
+\checkpoint{Write a short function to compute the unit vector that is 
+parallel with an inputted vector. Do a check to make sure that 
+vector inputted is not the Null vector.}
+
+
+\section{Higher dimensional example - character frequencies in different languages.}
+
+If you are given a piece of text, then it is possible to compute the frequency of occurence of each of the lower case letters in that text. It turns out that the frequency of these letters is relatively fixed from language to language (although this should not seen as an absolutely fixed set of frequencies as every text can represent a different style). It turns out that these frequencies are surprisingly constant between 
+different texts taken from the same language. We can even use it to  
+decrypt texts. 
+
+Put more mathematically for  each text $\mathcal T$ we can compute
+the frequency of each letter $f_a^{\mathcal T}$, $f_b^{\mathcal T}$ , $\dots$ where $f_a^{\mathcal T}$ is the frequency of lower case ``a'''s  in $\mathcal T$ and so on. For the English alphabet there are 26 letters, so we can construct a vector $\v{f}^{\mathcal T}$ of those frequencies. So, $\v{f}^{\mathcal T}$ is vector {\it with 26 entries}. 
+
+We can then compare how similar two texts $A$ and $B$ are by comparing their frequencies. 
+Let's suppose that their corresponding frequency vectors are $\v{f}^A$ and $\v{f}^B$. 
+We can easily compute cosine of the angle between these two vectors by computing 
+\begin{equation}
+\cos \theta \;\; = \;\; \frac{\dot{f^A}{f^B}}{\length{f^A}\length{f^B}} \;\; .
+\end{equation}
+ 
+ Remember - 
+ 
+\begin{enumerate}
+\item if $\cos \theta = 1$ then $\v{f}^A$ and $\v{f}^B$ are parallel to each other, which indicates their
+frequencies are very similar.
+\item It doesn't matter about the number of dimensions, the above relationship still holds (not just for two or three dimensions). 
+\end{enumerate}
+
+We can test this in Python. To do this you will write Python code to compute the frequency of letters for a text and then to compute the dot product between  different frequency vectors. Without looking at the files one can check if texts are from the same language or not.
+
+In the cell below are two functions that will read in a text  and return a string and another function which will return a vector with the {\it incidence} of lower case letters (i.e. how many times the letter ``a'' occurs and so on) in a string.
+
+\cli{
+import re
+
+func getString(fn):
+    f = open(fn,'r')
+    myString = f.read(10000)
+    return myString
+
+
+func getIncidence(string):
+    letters = "abcdefghijklmnopqrstuvwxyz"
+    Nc = len(letters)
+    n = np.zeros(Nc,dtype=np.float64)
+    i = 0
+    for c in letters:
+        x = re.findall(c,string)
+        n[i] = len(x) * 1.0
+        i += 1
+    return n 
+}
+
+ 
+\checkpoint{Write a function that will compute the frequency vector 
+of the text found in a text file. The input is the file name of the text file
+name and the output is the frequency vector for that file.
+If $\v{N}$ is the vector of incidences then 
+\[
+f_i \;\; = \;\; \frac{N_i}{\sum N_j} \;\; . 
+\] 
+If you look in the NumPy documentation you will a function to compute the denominator of this.  
+{\it This is not the same as computing the unit vector - prove this to yourself}. 
+} 
+
+\checkpoint{Write a function to compute the cosine of the angle between two text frequency vectors. You will need the {\tt math} library.}
+
+
+\checkpoint{In the Jupyter folder there are three files, Dutch.txt, English.txt and unknown.txt. The first two files are the same text in Dutch and English respectively. Compute the cosines between the 
+resulting frequency vectors of the three texts and try and determine the language of the file unknown.txt. }
+
+\section{Extension work}
+
+Rotation encryption is one of the oldest methods for encrypting texts.\footnote{The fact that it's sometimes called the ``Caesar Cipher'' gives you an idea of how old it is!} The idea is relatively simple.
+Each letter in a text is exchanged with a letter that is a specific number down from it in the alphabetical
+sequence. So with a encryption rotation with an offset of one would exchange
+
+{\tt a} $\rightarrow$ {\tt b},
+
+{\tt b} $\rightarrow$ {\tt c},
+
+$\dots$
+
+{\tt z} $\rightarrow$ {\tt a}.
+
+The cipher rotation with an offset of  13 (or ROT-13) would be  {\tt a} $\rightarrow$ {\tt n} and so on.
+
+If ones knows the offset, then one can decrypt the text by either performing the reverse transformation
+on the encrypted text or equivalently apply the transformation with a new offset where the sum of the
+offsets is 26 (the number of letters in the alphabet). So in the first case if a text has an encryption
+rotation with a offset of 1  applied to it and is then followed by an encryption rotation of 25 we end up with the same text. Two applications of ROT-13 likewise return you to the same text.
+
+This encryption method can be very easily broken using the letter frequency method that was discussed in the last set of lab materials. In particular, {\it the frequencies of the letters will remain the same, regardless of how they are transformed}. Furthermore if you have a reference text, which you know is from the same language as the encrypted text, then you can compare the frequencies to determine what was the offset was.
+
+If one applies the encryption rotation algorithm with right offset on the encrypted
+text then the cosine of the angle between the two frequency vectors should be close to 1.
+
+The following function takes a string and carries out a rotation of a 
+string. 
+
+\cli{
+import sys
+
+func rot(s,shift):
+    result = ""
+    numLetters = 26
+    if ( shift < -(numLetters-1) or shift > (numLetters-1) ):
+        print("Error in rot function - shift must be > -25 and < 25")
+        sys.exit(-1)
+        
+    for v in s:
+        c = ord(v)
+
+        if c >= ord('a') and c <= ord('z'):
+            deltaO = c - ord('a')
+            deltaN = (deltaO + shift) % numLetters
+            c = ord('a') + deltaN
+            
+        elif c >= ord('A') and c <= ord('Z'):
+            deltaO = c - ord('A')
+            deltaN = (deltaO + shift) % numLetters
+            c = ord('A') + deltaN
+
+        result += chr(c)
+
+    return result
+
+}
+
+\checkpoint{In the Jupyter folder there is a piece of English text encrypted using this approach called Englishencrypt.txt Using the above function try and decrypt the text just by comparing the cosine
+of the frequency vectors between the rotated text and the reference English.txt file. }
+ 
+\end{document}  
